@@ -12,43 +12,52 @@ def isPrime(x):
             return False
     return True
 
-def all_are_palindrome(l):
+def is_palindrome(x):
     '''
-    Determină dacă toate nr. din lista sunt palindroame
-    :param l: lista de nr. intregi
-    :return: True daca toate nr. din lista sunt palindroame sau False, in caz contrar
+    determina daca un nr. este palindrom
+    :param x: nr. intreg
+    :return: True daca nr. este palindrom sau False in caz contrar
     '''
-    for x in l:
-
-        oglindit =0
-        copie_x =x
-        while copie_x != 0:
-            oglindit= oglindit * 10 + copie_x % 10
-            copie_x = copie_x // 10
-    if x==oglindit:
+    oglindit = 0
+    copie_x = x
+    while copie_x != 0:
+        oglindit = oglindit * 10 + copie_x % 10
+        copie_x = copie_x // 10
+    if x == oglindit:
         return True
     return False
+
+def all_are_palindrome(l):
+    '''
+    determina daca toate nr. din lista sunt palindroame
+    :param l: lista de nr. intregi
+    :return: True daca toate nr. din lista sunt palindroame sau False in caz contrar
+    '''
+    for x in l:
+        if is_palindrome(x) is False:
+            return False
+    return True
 
 def test_all_are_palindrome():
     assert all_are_palindrome([121,141,131]) is True
     assert all_are_palindrome([136,456,345]) is False
 
 def get_longest_all_palindrome(l):
-        '''
-        determina cea mai lunga subsecventa de nr. care sunt palindroame
-        :param l: lista de nr. intregi
-        :return: cea mai lunga subsecventa de nr. care sunt palindroame
-        '''
-        subsecventaMax = []
-        for i in range(len(l)):
-            for j in range(i, len(l)):
-                if all_are_palindrome(l[i:j + 1]) and len(l[i:j + 1]) > len(subsecventaMax):
-                    subsecventaMax = l[i:j + 1]
-        return subsecventaMax
+    '''
+    determina cea mai lunga subsecventa de nr. care sunt palindroame
+    :param l: lista de nr. intregi
+    :return: cea mai lunga subsecventa de nr. care sunt palindroame
+    '''
+    subsecventaMax = []
+    for i in range(len(l)):
+        for j in range(i, len(l)):
+            if all_are_palindrome(l[i:j + 1]) and len(l[i:j + 1]) > len(subsecventaMax):
+                subsecventaMax = l[i:j + 1]
+    return subsecventaMax
 
 def test_get_longest_all_palindrome():
-    assert get_longest_all_palindrome([121,131,145,234]) == [121,131]
-    assert get_longest_all_palindrome([145,121,141,131,234,678]) == [121,141,131]
+    assert get_longest_all_palindrome([145,121,131,234]) == [121,131]
+    assert get_longest_all_palindrome([121,141,234,678]) == [121,141]
 
 def all_digits_are_prime(l):
     '''
@@ -56,16 +65,16 @@ def all_digits_are_prime(l):
     :param l: lista de nr. intregi
     :return: True daca toate nr. din l au toate cifrele prime sau False, in caz contrar
     '''
+    ok=1
     for x in l:
-        ok=1
         while x!=0:
             cifra=x%10
             if isPrime(cifra) is False:
                 ok=0
             x=x//10
-        if ok==1:
-            return True
-        return False
+    if ok==1:
+        return True
+    return False
 
 
 def test_all_digits_are_prime():
@@ -90,7 +99,7 @@ def get_longest_prime_digits(l):
 def test_get_longest_prime_digits():
     assert get_longest_prime_digits([33,77,56,90])==[33,77]
     assert get_longest_prime_digits([45,78,90])==[]
-    assert get_longest_prime_digits([33,23,56,78,55])==[33,23]
+    assert get_longest_prime_digits([33,23,56,78,54,77])==[33,23]
 
 def all_even(l):
     '''
@@ -145,9 +154,9 @@ def main():
     test_all_even()
     test_get_longest_all_even()
     test_all_digits_are_prime()
-    #test_get_longest_prime_digits()
+    test_get_longest_prime_digits()
     test_all_are_palindrome()
-    #test_get_longest_all_palindrome()
+    test_get_longest_all_palindrome()
     l = []
     while True:
         printMenu()
